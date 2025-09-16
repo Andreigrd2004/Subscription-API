@@ -3,6 +3,7 @@ import { PORT } from "./config/env.js";
 import authRoutes from "./routes/auth.routes.js";
 import subscriptionRoutes from "./routes/subscription.routes.js";
 import userRoutes from "./routes/user.routes.js";
+import connectToDatabase from "./database/mongodb.js";
 
 const app = express();
 
@@ -14,8 +15,9 @@ app.get("/", async (req, res) => {
     res.send("Welcome to the user");
 })
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
     console.log(`Subscription server started at http://localhost:${ PORT }`);
+    await connectToDatabase();
 });
 
 
