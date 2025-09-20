@@ -6,18 +6,23 @@ import userRoutes from "./routes/user.routes.js";
 import connectToDatabase from "./database/mongodb.js";
 import errorMiddleware from "./middlewares/error.middleware.js";
 import cookieParser from "cookie-parser";
+import arcjet from "@arcjet/node";
+import arcjetMiddleware from "./middlewares/arcjet.middleware.js";
 
 const app = express();
 
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(arcjetMiddleware);
+app.use(errorMiddleware);
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/subscriptions", subscriptionRoutes);
 app.use("/api/v1/users", userRoutes);
 
-app.use(errorMiddleware);
+
+
 
 app.get("/", async (req, res) => {
     res.send("Welcome to the user");
